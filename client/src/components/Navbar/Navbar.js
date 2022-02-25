@@ -3,11 +3,19 @@ import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import useStyles from "./Navbar.style";
 import memories from "../../images/undraw_moments_0y20.svg";
 import { Link } from "react-router-dom";
+import {useDispatch} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log(user);
+  const logout = () => {
+    dispatch({type: 'LOGOUT' })
+    navigate('/');
+    setUser(null)
+  }
 
   useEffect(() => {
     const token = user?.token;
@@ -50,6 +58,7 @@ function Navbar() {
               variant="contained"
               className={classes.logout}
               color="secondary"
+              onClick={logout}
             >
               Esci
             </Button>
