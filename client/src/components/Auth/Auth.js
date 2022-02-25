@@ -12,18 +12,37 @@ import {
 } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import Icon from "./icon";
+import { sigup, sigin } from "../../actions/auth";
+
+const initialState = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 function Auth() {
   const classes = useStyles();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const history = useNavigate();
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      dispatch(sigup(fromData, history));
+    } else {
+      dispatch(sigin(fromData, history));
+    }
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
   const switchMode = () => {
