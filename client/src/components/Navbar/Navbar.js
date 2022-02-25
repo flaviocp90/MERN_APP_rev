@@ -4,13 +4,14 @@ import useStyles from "./Navbar.style";
 import memories from "../../images/undraw_moments_0y20.svg";
 import { Link } from "react-router-dom";
 import {useDispatch} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const location = useLocation();
   const logout = () => {
     dispatch({type: 'LOGOUT' })
     navigate('/');
@@ -20,7 +21,7 @@ function Navbar() {
   useEffect(() => {
     const token = user?.token;
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
+  }, [location]);
 
   return (
     <AppBar position="static" color="inherit" className={classes.appBar}>
