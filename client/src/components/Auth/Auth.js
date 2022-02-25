@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
-
+import {useNavigate} from 'react-router-dom';
 import Input from "./Input";
 import Icon from "./icon";
 
@@ -21,7 +21,7 @@ function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-
+  const history = useNavigate();
   const handleSubmit = () => {};
   const handleChange = () => {};
   const handleShowPassword = () =>
@@ -34,7 +34,8 @@ function Auth() {
     const result = res?.profileObj;
     const token = res?.tokenId;
     try {
-      dispatch({type: 'AUTH', data: {result, token}})
+      dispatch({ type: "AUTH", data: { result, token } });
+      history("/");
     } catch (error) {
       console.log(error.message);
     }

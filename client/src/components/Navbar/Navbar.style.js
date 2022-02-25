@@ -15,4 +15,22 @@ export default makeStyles((theme) => ({
   image: {
     marginLeft: "30px",
   },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '400px'
+  },
+  profile: {
+    display: 'flex',
+    justifyContent: ' space-between',
+    width: '400px'
+  },
+  userName: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  brandContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
