@@ -14,7 +14,7 @@ function Navbar() {
   const location = useLocation();
   const logout = () => {
     dispatch({type: 'LOGOUT' })
-    navigate('/');
+    navigate('/auth');
     setUser(null)
   }
 

@@ -8,18 +8,17 @@ import {
   Grid,
   Typography,
   Container,
-  TextField,
 } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import Icon from "./icon";
-import { sigup, sigin } from "../../actions/auth";
+import { signin, signup } from "../../actions/auth";
 
 const initialState = {
-  firstname: "",
-  lastname: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -32,23 +31,27 @@ function Auth() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const history = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignUp) {
-      dispatch(sigup(fromData, history));
+      dispatch(signup(formData, history));
     } else {
-      dispatch(sigin(fromData, history));
+      dispatch(signin(formData, history));
     }
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
+
   const switchMode = () => {
     setIsSignUp((prevIsSignup) => !prevIsSignup);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
+
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
@@ -76,14 +79,14 @@ function Auth() {
             {isSignUp && (
               <>
                 <Input
-                  name="firstname"
+                  name="firstName"
                   label="Nome"
                   handleChange={handleChange}
                   autoFocus
                   half
                 />
                 <Input
-                  name="lastname"
+                  name="lastName"
                   label="Cognome"
                   handleChange={handleChange}
                   half
