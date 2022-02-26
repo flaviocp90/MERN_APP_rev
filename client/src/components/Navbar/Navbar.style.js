@@ -11,6 +11,7 @@ export default makeStyles((theme) => ({
   heading: {
     fontWeight: "bolder",
     padding: "30px",
+    textDecoration: 'none',
   },
   image: {
     marginLeft: "30px",
