@@ -3,8 +3,9 @@ import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import useStyles from "./Navbar.style";
 import memories from "../../images/undraw_moments_0y20.svg";
 import { Link } from "react-router-dom";
-import {useDispatch} from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import decode from "jwt-decode";
 
 function Navbar() {
   const classes = useStyles();
@@ -13,13 +14,17 @@ function Navbar() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const location = useLocation();
   const logout = () => {
-    dispatch({type: 'LOGOUT' })
-    navigate('/auth');
-    setUser(null)
-  }
+    dispatch({ type: "LOGOUT" });
+    navigate("/auth");
+    setUser(null);
+  };
 
   useEffect(() => {
     const token = user?.token;
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
