@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { TextField, Button, Typography, Paper, Modal } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,7 +29,11 @@ export default function Form({ currentId, setCurrentId }) {
     e.preventDefault();
 
     if (currentId === null) {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      if (postData.title) {
+        dispatch(createPost({ ...postData, name: user?.result?.name }));
+      } else {
+        alert("Title is required");
+      }
     } else {
       dispatch(
         updatePost(currentId, { ...postData, name: user?.result?.name })
@@ -51,14 +55,14 @@ export default function Form({ currentId, setCurrentId }) {
     });
   };
 
-  if(!user?.result?.name) {
-    return(
+  if (!user?.result?.name) {
+    return (
       <Paper className={classes.paper}>
-        <Typography variant="h6" align="center" >
+        <Typography variant="h6" align="center">
           Registrati per postare i tuoi ricordi e guardare quelli dei tuoi amici
         </Typography>
       </Paper>
-    )
+    );
   }
 
   return (
@@ -89,6 +93,7 @@ export default function Form({ currentId, setCurrentId }) {
           fullWidth
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+          required
         />
         <TextField
           name="message"
@@ -99,6 +104,8 @@ export default function Form({ currentId, setCurrentId }) {
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
           }
+          multiline
+          rows={4}
         />
         <TextField
           name="tags"
